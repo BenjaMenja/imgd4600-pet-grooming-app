@@ -1,19 +1,24 @@
-import Draggable from "react-draggable";
-import Dogbrush from "../../images/dog-brush.png"
-import UICircle from "../../images/blue-ui-circle.png"
+
+import UICircle from "../../images/blue-ui-circle-128.png"
+import {useEffect, useState} from "react";
+import Brush from "./Brush";
+import {Col, Row} from "reactstrap";
 function Practice() {
-    let dragFunction = function() {
-        console.log('hi')
-    }
+    let [brushPosition, setBrushPosition] = useState({x: 0, y: 0})
+
+    useEffect(() => {
+        console.log(brushPosition)
+    }, [brushPosition])
+
     return (
         <>
-            <Draggable onDrag={dragFunction} handle={".handle"} bounds={{left: -250, right: 250}}>
-                <div className={"handle"}>
-                    <img src={Dogbrush} alt={"Dogbrush"} draggable={false}/>
-                </div>
-            </Draggable>
-            <p>this is text</p>
-            <img src={UICircle} alt={"hmmm"} />
+            <Row xs={'5'}>
+                <Col />
+                <Col>
+                    <img src={UICircle} alt={"hmmm"} />
+                </Col>
+            </Row>
+            <Brush position={brushPosition} setPosition={setBrushPosition} />
         </>
     )
 }
