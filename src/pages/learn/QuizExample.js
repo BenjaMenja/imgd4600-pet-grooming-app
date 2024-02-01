@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from "react-router-dom";
 
 function Quizzes() {
     const questions = [
@@ -37,7 +38,12 @@ function Quizzes() {
     };
 
     return (
-        <div>
+        <>
+            <h1>Quiz</h1>
+            <Link className="nav-button" to="/">
+                Back to Home
+            </Link>
+            <br/><br/>
             {currentQuestion < questions.length ? (
                 <div>
                     <h2>{questions[currentQuestion].question}</h2>
@@ -60,7 +66,7 @@ function Quizzes() {
                     <p>Your Score: {score} out of {questions.length}</p>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 

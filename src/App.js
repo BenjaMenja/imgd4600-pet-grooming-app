@@ -3,7 +3,7 @@ import {HashRouter, Link, Route, Routes} from "react-router-dom";
 import Practice from "./pages/practice/Practice";
 import Schedule from "./pages/schedule/Schedule";
 import Home from "./pages/home/Home";
-import Quizzes from "./QuizExample";
+import Quizzes from "./pages/learn/QuizExample";
 import React from "react";
 
 function App() {
