@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pet-grooming-app/static/css/main.b1d7ec7b.css",
-    "main.js": "/pet-grooming-app/static/js/main.b4d869f6.js",
+    "main.js": "/pet-grooming-app/static/js/main.046547fa.js",
     "static/js/787.0e39870e.chunk.js": "/pet-grooming-app/static/js/787.0e39870e.chunk.js",
     "static/media/golden-retriever.png": "/pet-grooming-app/static/media/golden-retriever.d09244522ba875c606fa.png",
     "static/media/dog-brush-scaled.png": "/pet-grooming-app/static/media/dog-brush-scaled.8c31b1dfe93c6e31fbe2.png",
@@ -9,11 +9,11 @@
     "static/media/clippers-scaled-2.png": "/pet-grooming-app/static/media/clippers-scaled-2.e3c2e51082204f87a5df.png",
     "index.html": "/pet-grooming-app/index.html",
     "main.b1d7ec7b.css.map": "/pet-grooming-app/static/css/main.b1d7ec7b.css.map",
-    "main.b4d869f6.js.map": "/pet-grooming-app/static/js/main.b4d869f6.js.map",
+    "main.046547fa.js.map": "/pet-grooming-app/static/js/main.046547fa.js.map",
     "787.0e39870e.chunk.js.map": "/pet-grooming-app/static/js/787.0e39870e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b1d7ec7b.css",
-    "static/js/main.b4d869f6.js"
+    "static/js/main.046547fa.js"
   ]
 }
