@@ -49,7 +49,7 @@ function Practice() {
     return (
         <>
             <h1>Cleaning Time!</h1>
-            <Row xs={'5'}>
+            <Row xs={'5'} style={{width: "100%"}}>
                 <Col>
                     <Button color={'primary'} onClick={() => window.location.href="/pet-grooming-app"}>
                         Back to Home
