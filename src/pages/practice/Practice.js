@@ -50,7 +50,7 @@ function Practice() {
     return (
         <>
             <h1>Cleaning Time!</h1>
-            <Row xs={'5'}>
+            <Row xs={'5'} style={{width: "100%"}}>
                 <Col>
                     <Link className="nav-button" to="/">
                         Back to Home
