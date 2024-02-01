@@ -9,7 +9,7 @@ import React from "react";
 function App() {
   return (
     <div className="App">
-        <HashRouter basename="/pet-grooming-app/">
+        <HashRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/learn" element={<Quizzes />} />
