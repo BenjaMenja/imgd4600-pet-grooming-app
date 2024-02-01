@@ -1,18 +1,25 @@
 import './App.css';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {HashRouter, Link, Route, Routes} from "react-router-dom";
 import Practice from "./pages/practice/Practice";
+import Schedule from "./pages/schedule/Schedule";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
     <div className="App">
-        <Router>
+        <HashRouter basename="/pet-grooming-app/">
             <Routes>
-                <Route path={'imgd4600-pet-grooming-app/'} element={<div>HOME</div>} />
-                <Route path={'/imgd4600-pet-grooming-app/learn'} element={<div>LEARN</div>} />
-                <Route path={'/imgd4600-pet-grooming-app/practice'} element={<Practice />} />
-                <Route path={'/imgd4600-pet-grooming-app/schedule'} element={<div>SCHEDULE</div>} />
+                <Route path="/" element={<Home />} />
+                <Route path="/learn" element={<div>
+                   LEARN
+                   <Link className="nav-button" to="/">
+                      Back to Home
+                   </Link>
+                </div>} />
+                <Route path="/practice" element={<Practice />} />
+                <Route path="/schedule" element={<Schedule />} />
             </Routes>
-        </Router>
+        </HashRouter>
     </div>
   );
 }

@@ -1,5 +1,43 @@
+:root {
+  --pal-darkblue: royalblue;
+  --pal-lightblue: dodgerblue;
+  --pal-teal: lightseagreen;
+  --pal-beige: beige;
+  --pal-gray: #444;
+}
+
+.nav-button {
+  padding: 8px;
+  background-color: var(--pal-lightblue);
+  border-radius: 5px;
+  text-decoration-line: none;
+  color: white;
+}
+
+.nav-button:hover {
+  background-color: var(--pal-darkblue);
+}
+
+.App h1 {
+  width: 100%;
+  color: white;
+  background-color: var(--pal-lightblue);
+  padding-top: 10px;
+}
+
+.App h1::after {
+  display: block;
+  content: "";
+  width: 100%;
+  background-color: var(--pal-darkblue);
+  height: 0.5em;
+  margin-top: 10px;
+}
+
 .App {
   text-align: center;
+  background-color: var(--pal-beige);
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -26,6 +64,98 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.grooming-calendar {
+  width: 60vw;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.grooming-calendar * {
+  box-sizing: border-box;
+}
+
+.grooming-calendar ul {
+  list-style-type: none;
+}
+
+.grooming-calendar .month {
+  padding: 15px;
+  width: 100%;
+  background: var(--pal-darkblue);
+  text-align: center;
+
+  border-radius: 5px 5px 0 0;
+}
+
+.grooming-calendar .month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.grooming-calendar .month ul li {
+  color: white;
+  font-size: xxx-large;
+  letter-spacing: 1px;
+}
+
+.grooming-calendar .month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.grooming-calendar .month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.grooming-calendar .weekdays {
+  margin: 0;
+  padding: 10px;
+  background-color: var(--pal-gray);
+  text-align: left;
+}
+
+.grooming-calendar .weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: white;
+  text-align: center;
+
+  font-weight: bold;
+  margin: 0.2vh;
+}
+
+.grooming-calendar .days {
+  padding: 10px;
+  background: var(--pal-darkblue);
+  margin: 0;
+  text-align: left;
+
+  border-radius: 0 0 5px 5px;
+
+  height: 60vh;
+}
+
+.grooming-calendar .days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  height: 8vh;
+  text-align: center;
+  font-size: larger;
+
+  color: white;
+  background-color: var(--pal-lightblue);
+  margin: 0.2vh;
+  border-radius: 5px;
+}
+
+.grooming-calendar .days li.active {
+  background-color: var(--pal-teal);
+  color: black;
 }
 
 @keyframes App-logo-spin {

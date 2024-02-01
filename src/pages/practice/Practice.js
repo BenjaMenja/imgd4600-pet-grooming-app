@@ -6,6 +6,7 @@ import Clipper from "../../images/clippers-scaled-2.png"
 import {useEffect, useRef, useState} from "react";
 import CleaningUtensil from "./CleaningUtensil";
 import {Button, Col, Row} from "reactstrap";
+import {Link} from "react-router-dom";
 function Practice() {
     const [brushPosition, setBrushPosition] = useState({x: 0, y: 0})
     const [toothbrushPosition, setToothbrushPosition] = useState({x: 0, y: 0})
@@ -49,11 +50,11 @@ function Practice() {
     return (
         <>
             <h1>Cleaning Time!</h1>
-            <Row xs={'5'}>
+            <Row xs={'5'} style={{width: "100%"}}>
                 <Col>
-                    <Button color={'primary'} onClick={() => window.location.href="/pet-grooming-app"}>
+                    <Link className="nav-button" to="/">
                         Back to Home
-                    </Button>
+                    </Link>
                 </Col>
                 <Col>
                     <img ref={brushcircle} src={UICircle} alt={"hmmm"} />
