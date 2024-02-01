@@ -143,7 +143,7 @@
   list-style-type: none;
   display: inline-block;
   width: 13.6%;
-  height: 8vh;
+  height: 8.6vh;
   text-align: center;
   font-size: larger;
 
@@ -153,9 +153,19 @@
   border-radius: 5px;
 }
 
+.grooming-calendar .days li svg * {
+  stroke: white;
+  fill: white;
+}
+
 .grooming-calendar .days li.active {
   background-color: var(--pal-teal);
   color: black;
+}
+
+.grooming-calendar .days li.active svg * {
+  stroke: black;
+  fill: black;
 }
 
 @keyframes App-logo-spin {
