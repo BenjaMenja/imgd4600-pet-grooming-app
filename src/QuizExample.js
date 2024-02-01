@@ -64,7 +64,7 @@ function Quizzes() {
     );
 }
 
-export default QuizExample
+export default Quizzes
 
 /*
 const App = () => {
