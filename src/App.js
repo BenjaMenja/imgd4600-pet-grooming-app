@@ -7,10 +7,10 @@ function App() {
     <div className="App">
         <Router>
             <Routes>
-                <Route path="/imgd4600-pet-grooming-app/" element={<div>HOME</div>} />
-                <Route path="/imgd4600-pet-grooming-app/learn" element={<div>LEARN</div>} />
-                <Route path="/imgd4600-pet-grooming-app/practice" element={<Practice />} />
-                <Route path="/imgd4600-pet-grooming-app/schedule" element={<div>SCHEDULE</div>} />
+                <Route path={'imgd4600-pet-grooming-app/'} element={<div>HOME</div>} />
+                <Route path={'/imgd4600-pet-grooming-app/learn'} element={<div>LEARN</div>} />
+                <Route path={'/imgd4600-pet-grooming-app/practice'} element={<Practice />} />
+                <Route path={'/imgd4600-pet-grooming-app/schedule'} element={<div>SCHEDULE</div>} />
             </Routes>
         </Router>
     </div>
