@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/imgd4600-pet-grooming-app/static/css/main.b1d7ec7b.css",
-    "main.js": "/imgd4600-pet-grooming-app/static/js/main.85ba6bd8.js",
+    "main.js": "/imgd4600-pet-grooming-app/static/js/main.dc9c5068.js",
     "static/js/787.0e39870e.chunk.js": "/imgd4600-pet-grooming-app/static/js/787.0e39870e.chunk.js",
     "static/media/golden-retriever.png": "/imgd4600-pet-grooming-app/static/media/golden-retriever.d09244522ba875c606fa.png",
     "static/media/dog-brush-scaled.png": "/imgd4600-pet-grooming-app/static/media/dog-brush-scaled.8c31b1dfe93c6e31fbe2.png",
@@ -9,11 +9,11 @@
     "static/media/clippers-scaled-2.png": "/imgd4600-pet-grooming-app/static/media/clippers-scaled-2.e3c2e51082204f87a5df.png",
     "index.html": "/imgd4600-pet-grooming-app/index.html",
     "main.b1d7ec7b.css.map": "/imgd4600-pet-grooming-app/static/css/main.b1d7ec7b.css.map",
-    "main.85ba6bd8.js.map": "/imgd4600-pet-grooming-app/static/js/main.85ba6bd8.js.map",
+    "main.dc9c5068.js.map": "/imgd4600-pet-grooming-app/static/js/main.dc9c5068.js.map",
     "787.0e39870e.chunk.js.map": "/imgd4600-pet-grooming-app/static/js/787.0e39870e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b1d7ec7b.css",
-    "static/js/main.85ba6bd8.js"
+    "static/js/main.dc9c5068.js"
   ]
 }
