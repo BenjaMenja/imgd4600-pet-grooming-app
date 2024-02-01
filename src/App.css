@@ -1,3 +1,39 @@
+:root {
+  --pal-darkblue: royalblue;
+  --pal-lightblue: dodgerblue;
+  --pal-teal: lightseagreen;
+  --pal-beige: beige;
+  --pal-gray: #444;
+}
+
+.nav-button {
+  padding: 8px;
+  background-color: var(--pal-lightblue);
+  border-radius: 5px;
+  text-decoration-line: none;
+  color: white;
+}
+
+.nav-button:hover {
+  background-color: var(--pal-darkblue);
+}
+
+.App h1 {
+  width: 100%;
+  color: white;
+  background-color: var(--pal-lightblue);
+  padding-top: 10px;
+}
+
+.App h1::after {
+  display: block;
+  content: "";
+  width: 100%;
+  background-color: var(--pal-darkblue);
+  height: 0.5em;
+  margin-top: 10px;
+}
+
 .App {
   text-align: center;
 }
