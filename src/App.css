@@ -168,6 +168,16 @@
   fill: black;
 }
 
+.grooming-calendar .days li svg.done * {
+  stroke: green;
+  fill: green;
+}
+
+.grooming-calendar .days li svg.missed * {
+  stroke: darkred;
+  fill: darkred;
+}
+
 .dog-selector {
   display: flex;
   flex-direction: row;
@@ -186,4 +196,13 @@
 
 .dog-selector .button {
   margin-right: 5%;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
