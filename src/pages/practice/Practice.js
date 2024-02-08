@@ -1,12 +1,19 @@
-import GoldenRetriever from "../../images/golden-retriever.png"
 import UICircle from "../../images/blue-ui-circle-128.png"
 import Dogbrush from "../../images/dog-brush-scaled.png"
 import Toothbrush from "../../images/toothbrush-scaled.png"
 import Clipper from "../../images/clippers-scaled-2.png"
+import GoldenRetriever from "../../images/dogs/golden-retriever.png";
+import GoldenRetrieverTeeth from "../../images/dogs/Golden-Retriever-Teeth.png"
+import ShihTzuLongHair from "../../images/dogs/shih-tzu-long-hair.png";
+import ShihTzuLongHair2 from "../../images/dogs/shih-tzu-long-hair-2.png";
+import DobermannNails from "../../images/dogs/dobermann-nails.jpg"
 import {useEffect, useRef, useState} from "react";
 import CleaningUtensil from "./CleaningUtensil";
-import {Button, Col, Row} from "reactstrap";
+import {Col, Row} from "reactstrap";
 import {Link} from "react-router-dom";
+import DogSelector from "./DogSelector";
+import Dog from "./Dog";
+
 function Practice() {
     const [brushPosition, setBrushPosition] = useState({x: 0, y: 0})
     const [toothbrushPosition, setToothbrushPosition] = useState({x: 0, y: 0})
@@ -19,11 +26,19 @@ function Practice() {
     const clippercircle = useRef(null)
     const [clipperCircleCenter, setClipperCircleCenter] = useState({x: 0, y: 0})
 
+    const Dogs = [
+        <Dog image={GoldenRetriever} requiredTool={"toothbrush"}/>,
+        <Dog image={ShihTzuLongHair} requiredTool={"brush"}/>,
+        <Dog image={ShihTzuLongHair2} requiredTool={"brush"}/>,
+        <Dog image={GoldenRetrieverTeeth} requiredTool={"toothbrush"} />,
+        <Dog image={DobermannNails} requiredTool={"clipper"} />
+    ]
     useEffect(() => {
         const getBrushCircleCenter = () => {
             if (brushcircle.current) {
                 const rect = brushcircle.current.getBoundingClientRect()
                 setBrushCircleCenter({x: 0, y: -(rect.top + (rect.height / 2))})
+                setBrushPosition({x: 0, y: -(rect.top + (rect.height / 2))})
             }
         }
 
@@ -31,6 +46,7 @@ function Practice() {
             if (toothbrushcircle.current) {
                 const rect = toothbrushcircle.current.getBoundingClientRect()
                 setToothbrushCircleCenter({x: 0, y: -(rect.top + (rect.height / 2))})
+                setToothbrushPosition({x: 0, y: -(rect.top + (rect.height / 2))})
             }
         }
 
@@ -38,6 +54,7 @@ function Practice() {
             if (clippercircle.current) {
                 const rect = clippercircle.current.getBoundingClientRect()
                 setClipperCircleCenter({x: 0, y: -(rect.top + (rect.height / 2))})
+                setClipperPosition({x: 0, y: -(rect.top + (rect.height / 2))})
             }
         }
 
@@ -46,6 +63,41 @@ function Practice() {
         getClipperCircleCenter()
     }, [])
 
+    const handleBrushDrag = (e, pos) => {
+        const {x, y} = pos;
+        const distance = Math.sqrt(Math.pow((x - brushCircleCenter.x), 2) + Math.pow((y - brushCircleCenter.y), 2))
+
+        if (distance <= 128) {
+            setBrushPosition({x: brushCircleCenter.x, y: brushCircleCenter.y})
+        }
+        else {
+            setBrushPosition({x: x + brushCircleCenter.x, y})
+        }
+    }
+
+    const handleToothbrushDrag = (e, pos) => {
+        const {x, y} = pos;
+        const distance = Math.sqrt(Math.pow((x - toothbrushCircleCenter.x), 2) + Math.pow((y - toothbrushCircleCenter.y), 2))
+
+        if (distance <= 128) {
+            setToothbrushPosition({x: toothbrushCircleCenter.x, y: toothbrushCircleCenter.y})
+        }
+        else {
+            setToothbrushPosition({x, y})
+        }
+    }
+
+    const handleClipperDrag = (e, pos) => {
+        const {x, y} = pos;
+        const distance = Math.sqrt(Math.pow((x - clipperCircleCenter.x), 2) + Math.pow((y - clipperCircleCenter.y), 2))
+
+        if (distance <= 128) {
+            setClipperPosition({x: clipperCircleCenter.x, y: clipperCircleCenter.y})
+        }
+        else {
+            setClipperPosition({x, y})
+        }
+    }
 
     return (
         <>
@@ -58,18 +110,18 @@ function Practice() {
                 </Col>
                 <Col>
                     <img ref={brushcircle} src={UICircle} alt={"hmmm"} />
-                    {brushcircle.current && (<CleaningUtensil setPosition={setBrushPosition} image={Dogbrush} startPos={brushCircleCenter}/>)}
+                    {brushcircle.current && (<CleaningUtensil position={brushPosition} onDrag={handleBrushDrag} image={Dogbrush}/>)}
                 </Col>
                 <Col>
                     <img ref={toothbrushcircle} src={UICircle} alt={"hmmm"} />
-                    {toothbrushcircle.current && (<CleaningUtensil setPosition={setToothbrushPosition} image={Toothbrush} startPos={toothbrushCircleCenter}/>)}
+                    {toothbrushcircle.current && (<CleaningUtensil position={toothbrushPosition} onDrag={handleToothbrushDrag} image={Toothbrush}/>)}
                 </Col>
                 <Col>
                     <img ref={clippercircle} src={UICircle} alt={"hmmm"} />
-                    {clippercircle.current && (<CleaningUtensil setPosition={setClipperPosition} image={Clipper} startPos={clipperCircleCenter}/>)}
+                    {clippercircle.current && (<CleaningUtensil position={clipperPosition} onDrag={handleClipperDrag} image={Clipper}/>)}
                 </Col>
             </Row>
-            <img src={GoldenRetriever} alt={"Golden Retriever"} />
+            <DogSelector Dogs={Dogs} brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition}/>
         </>
     )
 }

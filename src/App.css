@@ -168,11 +168,22 @@
   fill: black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dog-selector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.dog-selector .correct {
+  color: green;
+}
+
+.dog-selector .incorrect {
+  color: red;
+}
+
+.dog-selector .button {
+  margin-right: 5%;
 }
