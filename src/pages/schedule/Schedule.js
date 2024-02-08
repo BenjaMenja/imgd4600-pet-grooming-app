@@ -89,14 +89,14 @@ function Schedule() {
             <ul className="days">
                <li style={{visibility: "hidden"}}>0<DailyToDo tasks="" /></li>
                <li style={{visibility: "hidden"}}>0<DailyToDo tasks="" /></li>
-               <li className="active">1<DailyToDo tasks="wash brush" /></li>
+               <li>1<DailyToDo tasks="wash brush" /></li>
                <li>2<DailyToDo tasks="" /></li>
                <li>3<DailyToDo tasks="brush" /></li>
                <li>4<DailyToDo tasks="" /></li>
                <li>5<DailyToDo tasks="clip brush" /></li>
                <li>6<DailyToDo tasks="" /></li>
                <li>7<DailyToDo tasks="brush" /></li>
-               <li>8<DailyToDo tasks="" /></li>
+               <li className="active">8<DailyToDo tasks="" /></li>
                <li>9<DailyToDo tasks="brush" /></li>
                <li>10<DailyToDo tasks="" /></li>
                <li>11<DailyToDo tasks="brush" /></li>
