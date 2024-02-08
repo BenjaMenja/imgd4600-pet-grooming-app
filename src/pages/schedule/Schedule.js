@@ -1,12 +1,6 @@
-import {Button} from "reactstrap";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 
-import confetti from 'https://cdn.skypack.dev/canvas-confetti';
-
-function makeConfetti() {
-   confetti();
-}
 
 function ClipperIcon({useColor}) {
    return (
@@ -103,8 +97,8 @@ function Schedule() {
          }
          <br/>
          <br/>
-         {nailsClipped && washed? "Good work completing today's care tasks! There's nothing left to do.":"When you complete today's tasks, log them with the buttons below."}<br/><br/>
-         <button disabled={washed} onClick={() => {setWashed(true); makeConfetti();}}>I just washed my dog!</button> <button disabled={nailsClipped} onClick={() => {setNailsClipped(true); makeConfetti();}}>I just trimmed my dog's nails!</button>
+         {nailsClipped && washed? "Good work completing today's care tasks! There's nothing left to do. [Pretend there's confetti here, it broke when I tried to deploy]":"When you complete today's tasks, log them with the buttons below."}<br/><br/>
+         <button id="care-btn-1" disabled={washed} onClick={() => {setWashed(true)}}>I just washed my dog!</button> <button id="care-btn-2" disabled={nailsClipped} onClick={() => {setNailsClipped(true)}}>I just trimmed my dog's nails!</button>
          <br/>
          <br/>
          <div className="grooming-calendar">
