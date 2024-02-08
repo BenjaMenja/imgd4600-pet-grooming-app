@@ -17,7 +17,7 @@ function Home() {
          </Link>
          <br/><br/>
          <Link className="nav-button" to="/schedule">
-            Schedule Your Care
+            Your Care Schedule
          </Link>
       </>
    )
