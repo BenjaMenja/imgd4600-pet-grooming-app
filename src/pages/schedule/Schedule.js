@@ -55,32 +55,65 @@ function EmptyIcon() {
    );
 }
 
-function taskColor(t, task) {
-   if(t.includes(task + "_done")) {
-      return "done";
-   }
-
+function taskColor(t, task, done) {
    if(t.includes(task + "_missed")) {
       return "missed";
    }
 
-   return "";
+   if(t.includes(task + "_done")) {
+      return "done";
+   }
+
+   return done? "done":"";
 }
 
-function DailyToDo({tasks, functions=null}) {
-   const t = tasks.toLowerCase();
+function DailyToDo({todayActive=false, tasks, functions=null, editable=false}) {
+   const [taskList, setTaskList] = useState(tasks);
+
+   const [brushDone, setBrushDone] = useState(false);
+   const [washDone, setWashDone] = useState(false);
+   const [clipDone, setClipDone] = useState(false);
+
+
+   const t = taskList.toLowerCase();
 
    let fns = {wash: (e) => 0, brush: (e) => 0, clip: (e) => 0};
    if(functions) {
       fns = functions;
    }
 
+   let clickFn = (e) => 0;
+   if(editable) {
+      function doEdit(e) {
+         const newTsks = window.prompt("Add \"wash\", \"brush\", or \"clip\" to update your upcoming tasks.", taskList);
+         if(newTsks != null) {
+            setTaskList(newTsks);
+         }
+      }
+      clickFn = doEdit;
+   }
+
    return (
-       <div style={{display: "flex", justifyContent: "space-evenly"}}>
-          {t.includes("wash")? <SpongeIcon useColor={taskColor(t, "wash")} fn={fns.wash}/>:""}
-          {t.includes("brush")? <ToothbrushIcon useColor={taskColor(t, "brush")} fn={fns.brush}/>:""}
-          {t.includes("clip")? <ClipperIcon  useColor={taskColor(t, "clip")} fn={fns.clip}/>:""}
-          {tasks.length === 0? <EmptyIcon/>:""}
+       <div style={{display: "flex", justifyContent: "space-evenly"}} onClick={clickFn}>
+          {t.includes("wash")? <SpongeIcon useColor={taskColor(t, "wash", washDone)} fn={ e => {
+             fns.wash(e);
+             if(todayActive) {
+                setWashDone(true);
+             }
+          }}/>:""}
+          {t.includes("brush")? <ToothbrushIcon useColor={taskColor(t, "brush", brushDone)} fn={ e => {
+             fns.brush(e);
+             if(todayActive) {
+                setBrushDone(true);
+             }
+          }}/>:""}
+          {t.includes("clip")? <ClipperIcon  useColor={taskColor(t, "clip", clipDone)} fn={ e => {
+             fns.clip(e);
+             if(todayActive) {
+                setClipDone(true);
+             }
+          }}/>:""}
+          {t.length === 0? <EmptyIcon/>:""}
        </div>
    );
 }
@@ -113,8 +146,7 @@ function Schedule() {
          <br/>
          <br/>
          {nailsClipped && washed? "Good work completing today's care tasks! There's nothing left to do.":"Click today's tasks on the calendar to mark them as done."}
-         <br/>
-         <br/>
+         <p>Click on any day in the future to update its task list.</p>
          <div className="grooming-calendar">
             <div className="month">
                <ul>
@@ -154,22 +186,22 @@ function Schedule() {
                <li>13<DailyToDo tasks="brush_done" /></li>
                <li>14<DailyToDo tasks="" /></li>
                <li className="active">15
-                  <DailyToDo tasks={"wash" + (washed? "_done":" ") + "clip" + (nailsClipped? "_done":"")} functions={{wash: () => {setWashed(true); makeConfetti();}, clip: () => {setNailsClipped(true); makeConfetti();}}}/>
+                  <DailyToDo todayActive tasks="wash clip" functions={{wash: () => {setWashed(true); makeConfetti();}, clip: () => {setNailsClipped(true); makeConfetti();}}}/>
                </li>
-               <li>16<DailyToDo tasks="" /></li>
-               <li>17<DailyToDo tasks="brush" /></li>
-               <li>18<DailyToDo tasks="" /></li>
-               <li>19<DailyToDo tasks="brush" /></li>
-               <li>20<DailyToDo tasks="" /></li>
-               <li>21<DailyToDo tasks="brush" /></li>
-               <li>22<DailyToDo tasks="" /></li>
-               <li>23<DailyToDo tasks="brush" /></li>
-               <li>24<DailyToDo tasks="" /></li>
-               <li>25<DailyToDo tasks="brush" /></li>
-               <li>26<DailyToDo tasks="clip" /></li>
-               <li>27<DailyToDo tasks="brush" /></li>
-               <li>28<DailyToDo tasks="" /></li>
-               <li>29<DailyToDo tasks="brush wash" /></li>
+               <li>16<DailyToDo tasks="" editable/></li>
+               <li>17<DailyToDo tasks="brush" editable/></li>
+               <li>18<DailyToDo tasks="" editable/></li>
+               <li>19<DailyToDo tasks="brush" editable/></li>
+               <li>20<DailyToDo tasks="" editable/></li>
+               <li>21<DailyToDo tasks="brush" editable/></li>
+               <li>22<DailyToDo tasks="" editable/></li>
+               <li>23<DailyToDo tasks="brush" editable/></li>
+               <li>24<DailyToDo tasks="" editable/></li>
+               <li>25<DailyToDo tasks="brush" editable/></li>
+               <li>26<DailyToDo tasks="clip" editable/></li>
+               <li>27<DailyToDo tasks="brush" editable/></li>
+               <li>28<DailyToDo tasks="" editable/></li>
+               <li>29<DailyToDo tasks="brush wash" editable/></li>
             </ul>
          </div>
          <br/>
