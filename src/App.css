@@ -186,16 +186,29 @@
   font-size: 2rem;
 }
 
+.dog-selector > * {
+  margin-right: 5vw;
+}
+
+.dog-selector .explanation {
+  width: 20vw;
+  overflow-wrap: break-word;
+}
+
 .dog-selector .correct {
   color: green;
 }
 
-.dog-selector .incorrect {
-  color: red;
+.game-status {
+  font-size: 2rem;
 }
 
-.dog-selector .button {
-  margin-right: 5%;
+.game-status .correct {
+  color: green;
+}
+
+.game-status .incorrect {
+  color: red;
 }
 
 @keyframes App-logo-spin {
