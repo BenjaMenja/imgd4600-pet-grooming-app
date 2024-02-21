@@ -64,9 +64,7 @@ function DogSelector(props) {
     }, [props.clipperPosition])
 
     useEffect(() => {
-        console.log("hi")
         if (time === 3) {
-            console.log("Starting")
             intervalRef.current = setInterval(() => {
                 if (time >= 0) {
                     setTime(prevTime => prevTime - 1)

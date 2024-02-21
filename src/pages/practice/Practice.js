@@ -9,7 +9,6 @@ import ShihTzuLongHair2 from "../../images/dogs/shih-tzu-long-hair-2.png";
 import DobermannNails from "../../images/dogs/dobermann-nails.jpg"
 import {useEffect, useRef, useState} from "react";
 import CleaningUtensil from "./CleaningUtensil";
-import {Col, Row} from "reactstrap";
 import {Link} from "react-router-dom";
 import DogSelector from "./DogSelector";
 import Dog from "./Dog";
@@ -25,6 +24,7 @@ function Practice() {
     const [toothbrushCircleCenter, setToothbrushCircleCenter] = useState({x: 0, y: 0})
     const clippercircle = useRef(null)
     const [clipperCircleCenter, setClipperCircleCenter] = useState({x: 0, y: 0})
+    const [tasklist, setTasklist] = useState("")
 
     const Dogs = [
         <Dog image={GoldenRetriever} requiredTool={"toothbrush"}/>,
@@ -34,6 +34,11 @@ function Practice() {
         <Dog image={DobermannNails} requiredTool={"clipper"} />
     ]
     useEffect(() => {
+        const tasks = window.localStorage.getItem("dogapp-dailytasks")
+        if (tasks) {
+            setTasklist(tasks)
+            console.log(tasks)
+        }
         const getBrushCircleCenter = () => {
             if (brushcircle.current) {
                 const rect = brushcircle.current.getBoundingClientRect()
@@ -102,26 +107,28 @@ function Practice() {
     return (
         <>
             <h1>Cleaning Time!</h1>
-            <Row xs={'5'} style={{width: "100%"}}>
-                <Col>
-                    <Link className="nav-button" to="/">
-                        Back to Home
-                    </Link>
-                </Col>
-                <Col>
-                    <img ref={brushcircle} src={UICircle} alt={"hmmm"} />
-                    {brushcircle.current && (<CleaningUtensil position={brushPosition} onDrag={handleBrushDrag} image={Dogbrush}/>)}
-                </Col>
-                <Col>
-                    <img ref={toothbrushcircle} src={UICircle} alt={"hmmm"} />
-                    {toothbrushcircle.current && (<CleaningUtensil position={toothbrushPosition} onDrag={handleToothbrushDrag} image={Toothbrush}/>)}
-                </Col>
-                <Col>
-                    <img ref={clippercircle} src={UICircle} alt={"hmmm"} />
-                    {clippercircle.current && (<CleaningUtensil position={clipperPosition} onDrag={handleClipperDrag} image={Clipper}/>)}
-                </Col>
-            </Row>
-            <DogSelector Dogs={Dogs} brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition}/>
+                <div className={'practice'}>
+                    <div className={'top-items'}>
+                        <Link className="nav-button" to="/">
+                            Back to Home
+                        </Link>
+                        <div>
+                            <img ref={brushcircle} src={UICircle} alt={"hmmm"} />
+                            <CleaningUtensil position={brushPosition} onDrag={handleBrushDrag} image={Dogbrush}/>
+                        </div>
+                        <div>
+                            <img ref={toothbrushcircle} src={UICircle} alt={"hmmm"} />
+                            <CleaningUtensil position={toothbrushPosition} onDrag={handleToothbrushDrag} image={Toothbrush}/>
+                        </div>
+
+                        <div>
+                            <img ref={clippercircle} src={UICircle} alt={"hmmm"} />
+                            <CleaningUtensil position={clipperPosition} onDrag={handleClipperDrag} image={Clipper}/>
+                        </div>
+                        <div />
+                    </div>
+                    <DogSelector Dogs={Dogs} brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition}/>
+                </div>
         </>
     )
 }

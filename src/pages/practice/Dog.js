@@ -2,7 +2,7 @@ function Dog(props) {
 
     return (
         <>
-            <img src={props.image} alt={"Dog"} draggable={false} />
+            <img className={'dog-image'} src={props.image} alt={"Dog"} draggable={false} />
         </>
     )
 }

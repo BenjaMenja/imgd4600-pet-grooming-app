@@ -10,7 +10,10 @@
   padding: 8px;
   background-color: var(--pal-lightblue);
   border-radius: 5px;
+  border-color: var(--pal-lightblue);
+  max-width: 50%;
   text-decoration-line: none;
+  align-self: flex-start;
   color: white;
 }
 
@@ -178,6 +181,20 @@
   fill: darkred;
 }
 
+.practice .top-items {
+  display: flex;
+  max-height: 33vh;
+  justify-content: center;
+}
+
+.practice .top-items > * {
+  width: 20vw;
+}
+
+.dog-image {
+  max-width: 33vw;
+  height: auto;
+}
 .dog-selector {
   display: flex;
   flex-direction: row;
