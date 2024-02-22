@@ -11,7 +11,11 @@ import {initializeTasks} from "./TaskList";
 
 function App() {
    if (!localStorage.getItem("dogapp-tasksinit")) {
-      initializeTasks();
+      return (
+         <div className="App">
+            <ChooseDog/>
+         </div>
+      );
    }
 
    return (
@@ -19,7 +23,6 @@ function App() {
          <HashRouter>
             <Routes>
                <Route path="/" element={<Home/>}/>
-               <Route path="/chooseDog" element={<ChooseDog/>}/>
                <Route path="/starterQuiz" element={<Quiz/>}/>
                <Route path="/practice_menu" element={<PracticeMenu/>}/>
                <Route path="/practice" element={<Practice/>}/>

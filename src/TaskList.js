@@ -66,7 +66,7 @@ function makeObjFromStringTasks(stringTasks) {
          result.wash = "missed";
       }
       else {
-         result.wash = "";
+         result.wash = "pending";
       }
    }
    if(stringTasks.includes("brush")) {
@@ -77,7 +77,7 @@ function makeObjFromStringTasks(stringTasks) {
          result.brush = "missed";
       }
       else {
-         result.brush = "";
+         result.brush = "pending";
       }
    }
    if(stringTasks.includes("clip")) {
