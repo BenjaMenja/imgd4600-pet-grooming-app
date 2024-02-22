@@ -5,6 +5,7 @@ import Schedule from "./pages/schedule/Schedule";
 import Home from "./pages/home/Home";
 import Quizzes from "./pages/learn/QuizExample";
 import React from "react";
+import PracticeMenu from "./pages/practice/PracticeMenu";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/learn" element={<Quizzes />} />
+                <Route path="/practice_menu" element={<PracticeMenu />} />
                 <Route path="/practice" element={<Practice />} />
                 <Route path="/schedule" element={<Schedule />} />
             </Routes>

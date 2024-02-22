@@ -1,16 +1,29 @@
 import {useEffect, useRef, useState} from "react";
 
 function DogSelector(props) {
+
+    const generateDogNumber = () => {
+        let rand = Math.floor(Math.random() * props.Dogs.length)
+        const dailytasks = window.localStorage.getItem("dogapp-dailytasks")
+
+        while (true) {
+            rand = Math.floor(Math.random() * props.Dogs.length)
+            if (dailytasks.includes(props.Dogs[rand].props.requiredTool + " ")) {
+                break
+            }
+        }
+        return rand
+    }
     const ref = useRef(null)
     const [issue, setIssue] = useState("")
-    const [DogToShow, setDogToShow] = useState(0)
+    const [DogToShow, setDogToShow] = useState(generateDogNumber)
     const [correct, setCorrect] = useState(0)
     const [time, setTime] = useState(0)
     const intervalRef = useRef(null)
     const RandomDog = () => {
-        let rand = Math.floor(Math.random() * props.Dogs.length)
+        let rand = generateDogNumber()
         while (rand === DogToShow) {
-            rand = Math.floor(Math.random() * props.Dogs.length)
+            rand = generateDogNumber()
         }
         setDogToShow(rand)
     }
@@ -18,10 +31,11 @@ function DogSelector(props) {
     useEffect(() => {
         if (ref.current) {
             if (props.brushPosition.x > 0 && props.brushPosition.x < 500 && props.brushPosition.y > 100 && props.brushPosition.y < 600) {
-                if (props.Dogs[DogToShow].props.requiredTool === "brush") {
+                if (props.Dogs[DogToShow].props.requiredTool === "wash") {
                     setCorrect(1)
                     setIssue("correct")
                     setTime(3)
+                    props.setPracticeCount(prevState => prevState - 1)
                 }
                 else {
                     setCorrect(2)
@@ -34,10 +48,11 @@ function DogSelector(props) {
     useEffect(() => {
         if (ref.current) {
             if (props.toothbrushPosition.x > -250 && props.toothbrushPosition.x < 250 && props.toothbrushPosition.y > 100 && props.toothbrushPosition.y < 600) {
-                if (props.Dogs[DogToShow].props.requiredTool === "toothbrush") {
+                if (props.Dogs[DogToShow].props.requiredTool === "brush") {
                     setCorrect(1)
                     setIssue("correct")
                     setTime(3)
+                    props.setPracticeCount(prevState => prevState - 1)
                 }
                 else {
                     setCorrect(2)
@@ -50,10 +65,11 @@ function DogSelector(props) {
     useEffect(() => {
         if (ref.current) {
             if (props.clipperPosition.x > -500 && props.clipperPosition.x < 0 && props.clipperPosition.y > 100 && props.clipperPosition.y < 600) {
-                if (props.Dogs[DogToShow].props.requiredTool === "clipper") {
+                if (props.Dogs[DogToShow].props.requiredTool === "clip") {
                     setCorrect(1)
                     setIssue("correct")
                     setTime(3)
+                    props.setPracticeCount(prevState => prevState - 1)
                 }
                 else {
                     setCorrect(2)
@@ -131,15 +147,15 @@ function ExplanationDisplay(props) {
     useEffect(() => {
         if (ref.current) {
             switch (props.issue) {
-                case "brush":
+                case "wash":
                     setIndex(Math.floor(Math.random() * explanations.wrong_brush.length))
                     text.current = explanations.wrong_brush[index]
                     break
-                case "toothbrush":
+                case "brush":
                     setIndex(Math.floor(Math.random() * explanations.wrong_toothbrush.length))
                     text.current = explanations.wrong_toothbrush[index]
                     break
-                case "clipper":
+                case "clip":
                     setIndex(Math.floor(Math.random() * explanations.wrong_clipper.length))
                     text.current = explanations.wrong_clipper[index]
                     break
@@ -154,9 +170,9 @@ function ExplanationDisplay(props) {
     return (
         <>
             <p ref={ref} className={'explanation'}>
-                {props.issue === "brush" && explanations.wrong_brush[index]}
-                {props.issue === "toothbrush" && explanations.wrong_toothbrush[index]}
-                {props.issue === "clipper" && explanations.wrong_clipper[index]}
+                {props.issue === "wash" && explanations.wrong_brush[index]}
+                {props.issue === "brush" && explanations.wrong_toothbrush[index]}
+                {props.issue === "clip" && explanations.wrong_clipper[index]}
                 {props.issue === "correct" && "Generating new dog in " + props.time + "..."}
             </p>
         </>
@@ -164,13 +180,13 @@ function ExplanationDisplay(props) {
 }
 
 function Checkmark() {
-    return <svg width="10vw" height="10vw" viewBox="0 0 48 48" version="1" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 48 48">
+    return <svg width="10vw" height="10vw" viewBox="0 0 48 48" version="1" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 48 48">
         <polygon fill="#43A047" points="40.6,12.1 17,35.7 7.4,26.1 4.6,29 17,41.3 43.4,14.9"/>
     </svg>
 }
 
 function WhiteMark() {
-    return <svg width="10vw" height="10vw" viewBox="0 0 48 48" version="1" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 48 48">
+    return <svg width="10vw" height="10vw" viewBox="0 0 48 48" version="1" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 48 48">
         <polygon fill="#F5F5DC" points="40.6,12.1 17,35.7 7.4,26.1 4.6,29 17,41.3 43.4,14.9"/>
     </svg>
 }

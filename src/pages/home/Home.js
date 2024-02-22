@@ -1,9 +1,13 @@
 import {Button} from "reactstrap";
 import {Link} from "react-router-dom";
+import {useEffect} from "react";
 
 
 function Home() {
 
+    useEffect(() => {
+        window.localStorage.setItem("dogapp-date", new Date().toLocaleDateString())
+    }, [])
 
    return (
       <>
@@ -12,7 +16,7 @@ function Home() {
             Learn
          </Link>
          <br/><br/>
-         <Link className="nav-button" to="/practice">
+         <Link className="nav-button" to="/practice_menu">
             Practice!
          </Link>
          <br/><br/>

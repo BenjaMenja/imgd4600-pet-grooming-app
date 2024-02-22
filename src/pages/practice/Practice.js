@@ -2,11 +2,12 @@ import UICircle from "../../images/blue-ui-circle-128.png"
 import Dogbrush from "../../images/dog-brush-scaled.png"
 import Toothbrush from "../../images/toothbrush-scaled.png"
 import Clipper from "../../images/clippers-scaled-2.png"
-import GoldenRetriever from "../../images/dogs/golden-retriever.png";
-import GoldenRetrieverTeeth from "../../images/dogs/Golden-Retriever-Teeth.png"
+import GoldenRetrieverTeeth from "../../images/dogs/golden-retriever.png";
+import GoldenRetrieverTeeth2 from "../../images/dogs/Golden-Retriever-Teeth.png"
 import ShihTzuLongHair from "../../images/dogs/shih-tzu-long-hair.png";
 import ShihTzuLongHair2 from "../../images/dogs/shih-tzu-long-hair-2.png";
 import DobermannNails from "../../images/dogs/dobermann-nails.jpg"
+import GoldenRetrieverNails from "../../images/dogs/golden-retriever-nails.jpg"
 import {useEffect, useRef, useState} from "react";
 import CleaningUtensil from "./CleaningUtensil";
 import {Link} from "react-router-dom";
@@ -14,6 +15,19 @@ import DogSelector from "./DogSelector";
 import Dog from "./Dog";
 
 function Practice() {
+    const cleanTaskList = () => {
+        const taskarr = tasklist?.split(" ")
+        console.log(taskarr)
+        let counter = 0
+        taskarr?.forEach(task => {
+            if (!task.includes("_")) {
+                counter += Math.floor((Math.random() * 3) + 2)
+                console.log(counter)
+            }
+        })
+        return counter
+    }
+
     const [brushPosition, setBrushPosition] = useState({x: 0, y: 0})
     const [toothbrushPosition, setToothbrushPosition] = useState({x: 0, y: 0})
     const [clipperPosition, setClipperPosition] = useState({x: 0, y: 0})
@@ -24,21 +38,19 @@ function Practice() {
     const [toothbrushCircleCenter, setToothbrushCircleCenter] = useState({x: 0, y: 0})
     const clippercircle = useRef(null)
     const [clipperCircleCenter, setClipperCircleCenter] = useState({x: 0, y: 0})
-    const [tasklist, setTasklist] = useState("")
+    const [tasklist, setTasklist] = useState(window.localStorage.getItem("dogapp-dailytasks"))
+    const [practiceCount, setPracticeCount] = useState(cleanTaskList)
 
     const Dogs = [
-        <Dog image={GoldenRetriever} requiredTool={"toothbrush"}/>,
-        <Dog image={ShihTzuLongHair} requiredTool={"brush"}/>,
-        <Dog image={ShihTzuLongHair2} requiredTool={"brush"}/>,
-        <Dog image={GoldenRetrieverTeeth} requiredTool={"toothbrush"} />,
-        <Dog image={DobermannNails} requiredTool={"clipper"} />
+        <Dog image={GoldenRetrieverTeeth} requiredTool={"brush"} breed={"golden_retriever"}/>,
+        <Dog image={ShihTzuLongHair} requiredTool={"wash"} breed={"shih_tzu"}/>,
+        <Dog image={ShihTzuLongHair2} requiredTool={"wash"} breed={"shih_tzu"}/>,
+        <Dog image={GoldenRetrieverTeeth2} requiredTool={"brush"} breed={"golden_retriever"}/>,
+        <Dog image={DobermannNails} requiredTool={"clip"} breed={"dobermann"}/>,
+        <Dog image={GoldenRetrieverNails} requiredTool={"clip"} breed={"golden_retriever"} />
     ]
+
     useEffect(() => {
-        const tasks = window.localStorage.getItem("dogapp-dailytasks")
-        if (tasks) {
-            setTasklist(tasks)
-            console.log(tasks)
-        }
         const getBrushCircleCenter = () => {
             if (brushcircle.current) {
                 const rect = brushcircle.current.getBoundingClientRect()
@@ -106,7 +118,8 @@ function Practice() {
 
     return (
         <>
-            <h1>Cleaning Time!</h1>
+            {practiceCount > 0 ? <>
+                <h1>Cleaning Time!</h1>
                 <div className={'practice'}>
                     <div className={'top-items'}>
                         <Link className="nav-button" to="/">
@@ -127,8 +140,22 @@ function Practice() {
                         </div>
                         <div />
                     </div>
-                    <DogSelector Dogs={Dogs} brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition}/>
+                    <DogSelector Dogs={Dogs} brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition} setPracticeCount={setPracticeCount}/>
                 </div>
+            </> : <div className={"practice"}>
+                <h1>Cleaning Time!</h1>
+                <h2>Hooray! You are done!</h2>
+                <h3>Your dog is waiting for you! It's time to take of your dog, in real life!</h3>
+                <p>Remember to check off your tasks in the calendar tab!</p>
+                <div className={"task-complete"}>
+                    <Link to={"/"} className={"nav-button"}>
+                        To Homepage
+                    </Link>
+                    <Link to={"/schedule"} className={"nav-button"}>
+                        To Calendar
+                    </Link>
+                </div>
+            </div>}
         </>
     )
 }
