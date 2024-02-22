@@ -1,24 +1,25 @@
 {
   "files": {
-    "main.css": "/imgd4600-pet-grooming-app/static/css/main.9989cde0.css",
-    "main.js": "/imgd4600-pet-grooming-app/static/js/main.f578b8dd.js",
+    "main.css": "/imgd4600-pet-grooming-app/static/css/main.2e3711b4.css",
+    "main.js": "/imgd4600-pet-grooming-app/static/js/main.1cc851de.js",
     "static/js/787.0e39870e.chunk.js": "/imgd4600-pet-grooming-app/static/js/787.0e39870e.chunk.js",
     "static/media/golden-retriever.png": "/imgd4600-pet-grooming-app/static/media/golden-retriever.d09244522ba875c606fa.png",
     "static/media/shih-tzu-long-hair.png": "/imgd4600-pet-grooming-app/static/media/shih-tzu-long-hair.74b939477b5f90961eee.png",
     "static/media/Golden-Retriever-Teeth.png": "/imgd4600-pet-grooming-app/static/media/Golden-Retriever-Teeth.028b4fd1b1c69a6b1b9e.png",
     "static/media/shih-tzu-long-hair-2.png": "/imgd4600-pet-grooming-app/static/media/shih-tzu-long-hair-2.46edbe0144076fc19eec.png",
+    "static/media/golden-retriever-nails.jpg": "/imgd4600-pet-grooming-app/static/media/golden-retriever-nails.63213ce29497c08d859f.jpg",
     "static/media/dobermann-nails.jpg": "/imgd4600-pet-grooming-app/static/media/dobermann-nails.24488c694ae24a1aa425.jpg",
     "static/media/dog-brush-scaled.png": "/imgd4600-pet-grooming-app/static/media/dog-brush-scaled.8c31b1dfe93c6e31fbe2.png",
     "static/media/toothbrush-scaled.png": "/imgd4600-pet-grooming-app/static/media/toothbrush-scaled.9da3f924f4e1f93e5dfc.png",
     "static/media/clippers-scaled-2.png": "/imgd4600-pet-grooming-app/static/media/clippers-scaled-2.e3c2e51082204f87a5df.png",
     "static/media/message.mp3": "/imgd4600-pet-grooming-app/static/media/message.68ac2ce93780f2a30dc3.mp3",
     "index.html": "/imgd4600-pet-grooming-app/index.html",
-    "main.9989cde0.css.map": "/imgd4600-pet-grooming-app/static/css/main.9989cde0.css.map",
-    "main.f578b8dd.js.map": "/imgd4600-pet-grooming-app/static/js/main.f578b8dd.js.map",
+    "main.2e3711b4.css.map": "/imgd4600-pet-grooming-app/static/css/main.2e3711b4.css.map",
+    "main.1cc851de.js.map": "/imgd4600-pet-grooming-app/static/js/main.1cc851de.js.map",
     "787.0e39870e.chunk.js.map": "/imgd4600-pet-grooming-app/static/js/787.0e39870e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9989cde0.css",
-    "static/js/main.f578b8dd.js"
+    "static/css/main.2e3711b4.css",
+    "static/js/main.1cc851de.js"
   ]
 }
