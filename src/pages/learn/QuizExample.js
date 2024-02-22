@@ -1,50 +1,67 @@
 import React, { useState } from 'react';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
+import "./Quiz.css";
 
 function Quizzes() {
     const questions = [
         {
-            question: 'What is the capital of France?',
-            options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-            correctAnswer: 'Paris',
+            question: "How many times in a week should you brush your dog's teeth?",
+            options: ['5 times', '7 times', '3 times', '1 time'],
+            correctAnswer: '3 times',
         },
         {
-            question: 'Which planet is known as the Red Planet?',
-            options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-            correctAnswer: 'Mars',
+            question: "When should you trim your dog's nails?",
+            options: [
+                'When they begin to scrape the floor',
+                'Once a month',
+                'Never; the nails are trimmed whenever dogs move around',
+                'Once every week',
+            ],
+            correctAnswer: 'When they begin to scrape the floor',
         },
         {
-            question: 'What is the largest mammal?',
-            options: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
-            correctAnswer: 'Blue Whale',
+            question: 'How often should you bathe and brush your dog?',
+            options: [
+                'Roughly once every two weeks',
+                'When they get visibly dirty',
+                'Roughly once a month',
+                'Only during the spring and summer seasons',
+            ],
+            correctAnswer: 'Roughly once a month',
         },
     ];
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [score, setScore] = useState(0);
+    const [feedback, setFeedback] = useState({});
     const [selectedOption, setSelectedOption] = useState('');
+    const [quizCompleted, setQuizCompleted] = useState(false);
 
     const handleOptionSelect = (option) => {
         setSelectedOption(option);
     };
 
     const handleNextQuestion = () => {
-        if (selectedOption === questions[currentQuestion].correctAnswer) {
-            setScore(score + 1);
-        }
+        const isCorrect = selectedOption === questions[currentQuestion].correctAnswer;
+        setFeedback((prevFeedback) => ({
+            ...prevFeedback,
+            [currentQuestion]: { isCorrect, selectedOption },
+        }));
 
-        setSelectedOption('');
-        setCurrentQuestion(currentQuestion + 1);
+        if (currentQuestion + 1 === questions.length) {
+            setQuizCompleted(true);
+        } else {
+            setCurrentQuestion(currentQuestion + 1);
+            setSelectedOption('');
+        }
     };
 
     return (
         <>
             <h1>Quiz</h1>
-            <Link className="nav-button" to="/">
-                Back to Home
-            </Link>
-            <br/><br/>
-            {currentQuestion < questions.length ? (
+            <h3>Show what you know about grooming your dog breed!</h3>
+            <br />
+            <br />
+            {!quizCompleted ? (
                 <div>
                     <h2>{questions[currentQuestion].question}</h2>
                     <ul>
@@ -54,7 +71,7 @@ function Quizzes() {
                                 onClick={() => handleOptionSelect(option)}
                                 className={selectedOption === option ? 'selected' : ''}
                             >
-                                {option}
+                                <button className="option-button">{option}</button>
                             </li>
                         ))}
                     </ul>
@@ -63,22 +80,26 @@ function Quizzes() {
             ) : (
                 <div>
                     <h2>Quiz Completed!</h2>
-                    <p>Your Score: {score} out of {questions.length}</p>
+                    <ul>
+                        {questions.map((question, index) => (
+                            <li key={index}>
+                                {question.question}
+                                {feedback[index] && (
+                                    <p style={{ color: feedback[index].isCorrect ? 'green' : 'red' }}>
+                                        Your answer: {feedback[index].selectedOption} -{' '}
+                                        {feedback[index].isCorrect ? 'Correct' : 'Incorrect'}
+                                    </p>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                    <Link className="nav-button" to="/">
+                        Back to Home
+                    </Link>
                 </div>
             )}
         </>
     );
 }
 
-export default Quizzes
-
-/*
-const App = () => {
-    return (
-        <div className="App">
-            <h1>Simple Multiple Choice Quiz</h1>
-            <QuizExample />
-        </div>
-    );
-};
- */
+export default Quizzes;

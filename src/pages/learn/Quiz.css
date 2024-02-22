@@ -1,0 +1,14 @@
+.option-button {
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.option-button:active {
+    transform: scale(0.95);
+}
+
+.selected .option-button{
+    background-color: #333;
+    color: #fff;
+}
