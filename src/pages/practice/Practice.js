@@ -145,7 +145,7 @@ function Practice() {
             </> : <div className={"practice"}>
                 <h1>Cleaning Time!</h1>
                 <h2>Hooray! You are done!</h2>
-                <h3>Your dog is waiting for you! It's time to take of your dog, in real life!</h3>
+                <h3>Your dog is waiting for you! It's time to take care of your dog, in real life!</h3>
                 <p>Remember to check off your tasks in the calendar tab!</p>
                 <div className={"task-complete"}>
                     <Link to={"/"} className={"nav-button"}>

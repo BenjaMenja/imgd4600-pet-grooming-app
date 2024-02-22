@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {getTasksForToday} from "../../TaskList";
 
 function PracticeMenu() {
-    const [tasks, setTasks] = useState(window.localStorage.getItem("dogapp-dailytasks"))
+    const [tasks, setTasks] = useState(getTasksForToday())
     const [date, setDate] = useState(new Date())
 
     return (
@@ -14,7 +15,7 @@ function PracticeMenu() {
             <br />
             <br />
             {(tasks) ? <>
-                    <p><b>Tasks today ({date.toLocaleDateString()}):</b></p>
+                    <p><b>Tasks for today ({date.toLocaleDateString()}):</b></p>
                     <Tasklist tasks={tasks.split(" ")}/>
                     <br />
                     <Link to={'/practice'} className={'nav-button'}>
