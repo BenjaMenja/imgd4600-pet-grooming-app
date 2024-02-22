@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import HappyBeep from "../../audio/message.mp3";
+import {checkOffToday, getTasksForDay, getTasksForToday, setTasksForDay, setTasksForToday} from "../../TaskList";
 
 //import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
@@ -67,14 +68,15 @@ function taskColor(t, task, done) {
    return done? "done":"";
 }
 
-function DailyToDo({todayActive=false, tasks, functions=null, editable=false}) {
-   const [taskList, setTaskList] = useState(tasks);
+function DailyToDo({todayActive=false, day, functions=null, editable=false}) {
+   const [taskList, setTaskList] = useState(getTasksForDay(day));
 
    const [brushDone, setBrushDone] = useState(false);
    const [washDone, setWashDone] = useState(false);
    const [clipDone, setClipDone] = useState(false);
 
 
+   console.log(day, taskList)
    const t = taskList.toLowerCase();
 
    let fns = {wash: (e) => 0, brush: (e) => 0, clip: (e) => 0};
@@ -88,6 +90,7 @@ function DailyToDo({todayActive=false, tasks, functions=null, editable=false}) {
          const newTsks = window.prompt("Add \"wash\", \"brush\", or \"clip\" to update your upcoming tasks.", taskList);
          if(newTsks != null) {
             setTaskList(newTsks);
+            setTasksForDay(day, newTsks);
          }
       }
       clickFn = doEdit;
@@ -119,9 +122,8 @@ function DailyToDo({todayActive=false, tasks, functions=null, editable=false}) {
 }
 
 function Schedule() {
-
-   const [nailsClipped, setNailsClipped] = useState(false);
-   const [washed, setWashed] = useState(false);
+   const [nailsClipped, setNailsClipped] = useState(getTasksForToday().includes("clip_done"));
+   const [washed, setWashed] = useState(getTasksForToday().includes("wash_done"));
 
    return (
       <>
@@ -169,39 +171,39 @@ function Schedule() {
             </ul>
 
             <ul className="days">
-               <li style={{visibility: "hidden"}}>0<DailyToDo tasks="" /></li>
-               <li style={{visibility: "hidden"}}>0<DailyToDo tasks="" /></li>
-               <li>1<DailyToDo tasks="brush_done" /></li>
-               <li>2<DailyToDo tasks="clip_missed" /></li>
-               <li>3<DailyToDo tasks="brush_missed" /></li>
-               <li>4<DailyToDo tasks="" /></li>
-               <li>5<DailyToDo tasks="brush_done" /></li>
-               <li>6<DailyToDo tasks="" /></li>
-               <li>7<DailyToDo tasks="brush_done" /></li>
-               <li>8<DailyToDo tasks="" /></li>
-               <li>9<DailyToDo tasks="brush_done" /></li>
-               <li>10<DailyToDo tasks="" /></li>
-               <li>11<DailyToDo tasks="brush_done" /></li>
-               <li>12<DailyToDo tasks="" /></li>
-               <li>13<DailyToDo tasks="brush_done" /></li>
-               <li>14<DailyToDo tasks="" /></li>
-               <li className="active">15
-                  <DailyToDo todayActive tasks="wash clip" functions={{wash: () => {setWashed(true); makeConfetti();}, clip: () => {setNailsClipped(true); makeConfetti();}}}/>
+               <li style={{visibility: "hidden"}}>0<DailyToDo day={1} /></li>
+               <li style={{visibility: "hidden"}}>0<DailyToDo day={1} /></li>
+               <li>1<DailyToDo day={1} /></li>
+               <li>2<DailyToDo day={2} /></li>
+               <li>3<DailyToDo day={3} /></li>
+               <li>4<DailyToDo day={4} /></li>
+               <li>5<DailyToDo day={5} /></li>
+               <li>6<DailyToDo day={6} /></li>
+               <li>7<DailyToDo day={7} /></li>
+               <li>8<DailyToDo day={8} /></li>
+               <li>9<DailyToDo day={9} /></li>
+               <li>10<DailyToDo day={10} /></li>
+               <li>11<DailyToDo day={11} /></li>
+               <li>12<DailyToDo day={12} /></li>
+               <li>13<DailyToDo day={13} /></li>
+               <li>14<DailyToDo day={14} /></li>
+               <li>15<DailyToDo day={15} /></li>
+               <li>16<DailyToDo day={16} editable/></li>
+               <li>17<DailyToDo day={17} editable/></li>
+               <li>18<DailyToDo day={18} editable/></li>
+               <li>19<DailyToDo day={19} editable/></li>
+               <li>20<DailyToDo day={20} editable/></li>
+               <li>21<DailyToDo day={21} editable/></li>
+               <li className="active">22
+                  <DailyToDo todayActive day={22} functions={{wash: () => {setWashed(true); makeConfetti(); checkOffToday("wash");}, clip: () => {setNailsClipped(true); makeConfetti(); checkOffToday("clip");}}}/>
                </li>
-               <li>16<DailyToDo tasks="" editable/></li>
-               <li>17<DailyToDo tasks="brush" editable/></li>
-               <li>18<DailyToDo tasks="" editable/></li>
-               <li>19<DailyToDo tasks="brush" editable/></li>
-               <li>20<DailyToDo tasks="" editable/></li>
-               <li>21<DailyToDo tasks="brush" editable/></li>
-               <li>22<DailyToDo tasks="" editable/></li>
-               <li>23<DailyToDo tasks="brush" editable/></li>
-               <li>24<DailyToDo tasks="" editable/></li>
-               <li>25<DailyToDo tasks="brush" editable/></li>
-               <li>26<DailyToDo tasks="clip" editable/></li>
-               <li>27<DailyToDo tasks="brush" editable/></li>
-               <li>28<DailyToDo tasks="" editable/></li>
-               <li>29<DailyToDo tasks="brush wash" editable/></li>
+               <li>23<DailyToDo day={23} editable/></li>
+               <li>24<DailyToDo day={24} editable/></li>
+               <li>25<DailyToDo day={25} editable/></li>
+               <li>26<DailyToDo day={26} editable/></li>
+               <li>27<DailyToDo day={27} editable/></li>
+               <li>28<DailyToDo day={28} editable/></li>
+               <li>29<DailyToDo day={29} editable/></li>
             </ul>
          </div>
          <br/>
