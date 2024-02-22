@@ -27,7 +27,7 @@ function ChooseDog() {
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>Welcome New User!</h1>
-            <h3>Choose your preferred dog:</h3>
+            <h3>Choose your preferred dog breed:</h3>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
                 {dogOptions.map((dog) => (
                     <div key={dog.id} onClick={() => handleDogSelect(dog)} style={{ cursor: 'pointer' }}>
