@@ -99,15 +99,15 @@ function makeStringFromObjTasks(objTasks) {
    let result = "";
 
    if(objTasks.wash) {
-      let tmp = objTasks.wash == "pending"? "":("_" + objTasks.wash);
+      let tmp = objTasks.wash === "pending"? "":("_" + objTasks.wash);
       result += ("wash" + tmp + " ");
    }
    if(objTasks.brush) {
-      let tmp = objTasks.brush == "pending"? "":("_" + objTasks.brush);
+      let tmp = objTasks.brush === "pending"? "":("_" + objTasks.brush);
       result += ("brush" + tmp + " ");
    }
    if(objTasks.clip) {
-      let tmp = objTasks.clip == "pending"? "":("_" + objTasks.clip);
+      let tmp = objTasks.clip === "pending"? "":("_" + objTasks.clip);
       result += ("clip" + tmp + " ");
    }
 

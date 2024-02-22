@@ -20,7 +20,7 @@ function ChooseDog() {
    const handleNavigation = () => {
       if (selectedDog) {
          initializeTasks();
-         window.location.href = "/";
+         window.location.reload()
       } else {
          alert('Choose a dog breed before proceeding');
       }
