@@ -33,7 +33,7 @@ const Tasklist = (props) => {
     const getNumDone = () => {
         let numDone = 0
         props.tasks.forEach((task) => {
-            if (task.split("_")[1]) {
+            if (task.length == 0 || task.split("_")[1]) {
                 numDone++
             }
         })
@@ -41,10 +41,12 @@ const Tasklist = (props) => {
     }
     const [numDone, setNumDone] = useState(getNumDone)
 
+   console.log(props.tasks)
+
     return (
         <div className={'task-list'}>
             {
-                props.tasks.map(task => <div className={'task'}>
+                props.tasks.map(task => task.length == 0? "":<div className={'task'}>
                     <p key={task}>{task.split("_")[0][0].toUpperCase() + task.split("_")[0].substring(1)}</p>
                     {task.split("_")[0] === "brush" && <ToothbrushIcon isDone={task.split("_")[1]}/>}
                     {task.split("_")[0] === "wash" && <SpongeIcon isDone={task.split("_")[1]}/>}

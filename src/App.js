@@ -10,7 +10,7 @@ import PracticeMenu from "./pages/practice/PracticeMenu";
 import {initializeTasks} from "./TaskList";
 
 function App() {
-   if(!localStorage.getItem("dogapp-tasksinit")) {
+   if (!localStorage.getItem("dogapp-tasksinit")) {
       initializeTasks();
    }
 
@@ -18,11 +18,12 @@ function App() {
       <div className="App">
          <HashRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/chooseDog" element={<ChooseDog />} />
-                <Route path="/starterQuiz" element={<Quiz />} />
-                <Route path="/practice" element={<Practice />} />
-                <Route path="/schedule" element={<Schedule />} />
+               <Route path="/" element={<Home/>}/>
+               <Route path="/chooseDog" element={<ChooseDog/>}/>
+               <Route path="/starterQuiz" element={<Quiz/>}/>
+               <Route path="/practice_menu" element={<PracticeMenu/>}/>
+               <Route path="/practice" element={<Practice/>}/>
+               <Route path="/schedule" element={<Schedule/>}/>
             </Routes>
          </HashRouter>
       </div>

@@ -13,6 +13,7 @@ import CleaningUtensil from "./CleaningUtensil";
 import {Link} from "react-router-dom";
 import DogSelector from "./DogSelector";
 import Dog from "./Dog";
+import {getTasksForToday} from "../../TaskList";
 
 function Practice() {
     const cleanTaskList = () => {
@@ -38,8 +39,10 @@ function Practice() {
     const [toothbrushCircleCenter, setToothbrushCircleCenter] = useState({x: 0, y: 0})
     const clippercircle = useRef(null)
     const [clipperCircleCenter, setClipperCircleCenter] = useState({x: 0, y: 0})
-    const [tasklist, setTasklist] = useState(window.localStorage.getItem("dogapp-dailytasks"))
-    const [practiceCount, setPracticeCount] = useState(cleanTaskList)
+
+    console.log(getTasksForToday())
+    const [tasklist, setTasklist] = useState(getTasksForToday())
+    const [practiceCount, setPracticeCount] = useState(cleanTaskList())
 
     const Dogs = [
         <Dog image={GoldenRetrieverTeeth} requiredTool={"brush"} breed={"golden_retriever"}/>,
