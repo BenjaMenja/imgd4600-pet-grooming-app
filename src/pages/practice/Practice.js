@@ -2,18 +2,10 @@ import UICircle from "../../images/blue-ui-circle-128.png"
 import Dogbrush from "../../images/dog-brush-scaled.png"
 import Toothbrush from "../../images/toothbrush-scaled.png"
 import Clipper from "../../images/clippers-scaled-2.png"
-import GoldenRetrieverTeeth from "../../images/dogs/golden-retriever.png";
-import GoldenRetrieverTeeth2 from "../../images/dogs/Golden-Retriever-Teeth.png"
-import ShihTzuLongHair from "../../images/dogs/shih-tzu-long-hair.png";
-import ShihTzuLongHair2 from "../../images/dogs/shih-tzu-long-hair-2.png";
-import DobermannNails from "../../images/dogs/dobermann-nails.jpg"
-import GoldenRetrieverNails from "../../images/dogs/golden-retriever-nails.jpg"
-import GoldenRetrieverLongHair from "../../images/dogs/golden-retriever-long-hair.png"
 import {useEffect, useRef, useState} from "react";
 import CleaningUtensil from "./CleaningUtensil";
 import {Link} from "react-router-dom";
 import DogSelector from "./DogSelector";
-import Dog from "./Dog";
 import {getTasksForToday} from "../../TaskList";
 
 function Practice() {
@@ -25,7 +17,6 @@ function Practice() {
                 counter += Math.floor((Math.random() * 3) + 2)
             }
         })
-        console.log(counter)
         return counter
     }
 
@@ -40,19 +31,10 @@ function Practice() {
     const clippercircle = useRef(null)
     const [clipperCircleCenter, setClipperCircleCenter] = useState({x: 0, y: 0})
 
-    console.log(getTasksForToday())
     const [tasklist, setTasklist] = useState(getTasksForToday())
     const [practiceCount, setPracticeCount] = useState(cleanTaskList())
 
-    const Dogs = [
-        <Dog image={GoldenRetrieverTeeth} requiredTool={"brush"} breed={"golden_retriever"}/>,
-        <Dog image={ShihTzuLongHair} requiredTool={"wash"} breed={"shih_tzu"}/>,
-        <Dog image={ShihTzuLongHair2} requiredTool={"wash"} breed={"shih_tzu"}/>,
-        <Dog image={GoldenRetrieverTeeth2} requiredTool={"brush"} breed={"golden_retriever"}/>,
-        <Dog image={DobermannNails} requiredTool={"clip"} breed={"dobermann"}/>,
-        <Dog image={GoldenRetrieverNails} requiredTool={"clip"} breed={"golden_retriever"} />,
-        <Dog image={GoldenRetrieverLongHair} requiredTool={"wash"} breed={"golden_retriever"} />
-    ]
+
 
     useEffect(() => {
         const getBrushCircleCenter = () => {
@@ -120,6 +102,12 @@ function Practice() {
         }
     }
 
+    const resetToolPositions = () => {
+        setBrushPosition({x: brushCircleCenter.x, y: brushCircleCenter.y})
+        setToothbrushPosition({x: toothbrushCircleCenter.x, y: toothbrushCircleCenter.y})
+        setClipperPosition({x: clipperCircleCenter.x, y: clipperCircleCenter.y})
+    }
+
     return (
         <>
             {practiceCount > 0 ? <>
@@ -144,7 +132,7 @@ function Practice() {
                         </div>
                         <div />
                     </div>
-                    <DogSelector Dogs={Dogs} brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition} setPracticeCount={setPracticeCount}/>
+                    <DogSelector brushPosition={brushPosition} toothbrushPosition={toothbrushPosition} clipperPosition={clipperPosition} setPracticeCount={setPracticeCount} resetToolPositions={resetToolPositions}/>
                 </div>
             </> : <div className={"practice"}>
                 <h1>Cleaning Time!</h1>
