@@ -8,6 +8,7 @@ import ShihTzuLongHair from "../../images/dogs/shih-tzu-long-hair.png";
 import ShihTzuLongHair2 from "../../images/dogs/shih-tzu-long-hair-2.png";
 import DobermannNails from "../../images/dogs/dobermann-nails.jpg"
 import GoldenRetrieverNails from "../../images/dogs/golden-retriever-nails.jpg"
+import GoldenRetrieverLongHair from "../../images/dogs/golden-retriever-long-hair.png"
 import {useEffect, useRef, useState} from "react";
 import CleaningUtensil from "./CleaningUtensil";
 import {Link} from "react-router-dom";
@@ -18,14 +19,13 @@ import {getTasksForToday} from "../../TaskList";
 function Practice() {
     const cleanTaskList = () => {
         const taskarr = tasklist?.split(" ")
-        console.log(taskarr)
         let counter = 0
         taskarr?.forEach(task => {
             if (!task.includes("_")) {
                 counter += Math.floor((Math.random() * 3) + 2)
-                console.log(counter)
             }
         })
+        console.log(counter)
         return counter
     }
 
@@ -50,7 +50,8 @@ function Practice() {
         <Dog image={ShihTzuLongHair2} requiredTool={"wash"} breed={"shih_tzu"}/>,
         <Dog image={GoldenRetrieverTeeth2} requiredTool={"brush"} breed={"golden_retriever"}/>,
         <Dog image={DobermannNails} requiredTool={"clip"} breed={"dobermann"}/>,
-        <Dog image={GoldenRetrieverNails} requiredTool={"clip"} breed={"golden_retriever"} />
+        <Dog image={GoldenRetrieverNails} requiredTool={"clip"} breed={"golden_retriever"} />,
+        <Dog image={GoldenRetrieverLongHair} requiredTool={"wash"} breed={"golden_retriever"} />
     ]
 
     useEffect(() => {

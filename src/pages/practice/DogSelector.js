@@ -11,11 +11,12 @@ function DogSelector(props) {
         while (tries < 100) {
             rand = Math.floor(Math.random() * props.Dogs.length)
 
-            if (dailytasks.includes(props.Dogs[rand].props.requiredTool) && !dailytasks.includes(props.Dogs[rand].props.requiredTool + "_done")) {
+            if (dailytasks.includes(props.Dogs[rand].props.requiredTool) && !dailytasks.includes(props.Dogs[rand].props.requiredTool + "_done") && props.Dogs[rand].props.breed === window.localStorage.getItem("dogapp-breed")) {
                 break
             }
             tries++;
         }
+        console.log(tries)
         return rand
     }
     const ref = useRef(null)
@@ -48,7 +49,7 @@ function DogSelector(props) {
                 }
             }
         }
-    }, [DogToShow, props, props.brushPosition])
+    }, [props.brushPosition])
 
     useEffect(() => {
         if (ref.current) {
@@ -65,7 +66,7 @@ function DogSelector(props) {
                 }
             }
         }
-    }, [DogToShow, props, props.toothbrushPosition])
+    }, [props.toothbrushPosition])
 
     useEffect(() => {
         if (ref.current) {
@@ -82,7 +83,7 @@ function DogSelector(props) {
                 }
             }
         }
-    }, [DogToShow, props, props.clipperPosition])
+    }, [props.clipperPosition])
 
     useEffect(() => {
         if (time === 3) {
@@ -99,7 +100,7 @@ function DogSelector(props) {
             setTime(0)
             clearInterval(intervalRef.current)
         }
-    }, [RandomDog, time])
+    }, [time])
 
     return (
         <div ref={ref} className={"dog-selector"}>
