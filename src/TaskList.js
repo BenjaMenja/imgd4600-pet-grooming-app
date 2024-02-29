@@ -1,49 +1,84 @@
 export function initializeTasks() {
-   localStorage.setItem("dogapp-tasks1", "wash_done brush_done");
-   localStorage.setItem("dogapp-tasks2", "clip_missed");
-   localStorage.setItem("dogapp-tasks3", "brush_missed");
-   localStorage.setItem("dogapp-tasks4", "");
-   localStorage.setItem("dogapp-tasks5", "brush_done");
-   localStorage.setItem("dogapp-tasks6", "");
-   localStorage.setItem("dogapp-tasks7", "brush_done");
-   localStorage.setItem("dogapp-tasks8", "");
-   localStorage.setItem("dogapp-tasks9", "brush_done");
-   localStorage.setItem("dogapp-tasks10", "");
-   localStorage.setItem("dogapp-tasks11", "brush_missed");
-   localStorage.setItem("dogapp-tasks12", "");
-   localStorage.setItem("dogapp-tasks13", "brush_done");
-   localStorage.setItem("dogapp-tasks14", "");
-   localStorage.setItem("dogapp-tasks15", "brush_done");
-   localStorage.setItem("dogapp-tasks16", "");
-   localStorage.setItem("dogapp-tasks17", "brush_done");
-   localStorage.setItem("dogapp-tasks18", "");
-   localStorage.setItem("dogapp-tasks19", "brush_done");
-   localStorage.setItem("dogapp-tasks20", "");
-   localStorage.setItem("dogapp-tasks21", "brush_done");
-   localStorage.setItem("dogapp-tasks22", "wash clip");
-   localStorage.setItem("dogapp-tasks23", "brush");
-   localStorage.setItem("dogapp-tasks24", "");
-   localStorage.setItem("dogapp-tasks25", "brush");
-   localStorage.setItem("dogapp-tasks26", "clip");
-   localStorage.setItem("dogapp-tasks27", "brush");
-   localStorage.setItem("dogapp-tasks28", "");
-   localStorage.setItem("dogapp-tasks29", "brush");
+   setDay(1, "wash_done brush_done clip_done");
+   setDay(2, "clip_missed brush_missed");
+   setDay(3, "brush_missed");
+   setDay(5, "brush_done");
+   setDay(7, "brush_done wash_done");
+   setDay(9, "brush_done");
+   setDay(11, "brush_missed");
+   setDay(13, "brush_done");
+   setDay(15, "brush_done");
+   setDay(17, "brush_done");
+   setDay(19, "brush_done");
+   setDay(21, "brush_done");
+   setDay(22, "wash_done clip_done");
+   setDay(23, "brush_done");
+   setDay(25, "brush_done");
+   setDay(26, "clip_missed");
+   setDay(27, "brush_missed");
+   setDay(28, "wash_missed");
+   setDay(29, "brush_missed clip_missed wash_missed");
 
-   localStorage.setItem("dogapp-tasksinit", "true");
+   setDay(30, "brush_missed");
+   setDay(31, "brush_missed");
+   setDay(35, "brush_missed wash_missed");
+   setDay(37, "brush_missed");
+   setDay(38, "clip_missed");
+   setDay(39, "brush_missed");
+
+   localStorage.setItem("dogapp-washstreak", "0");
+   localStorage.setItem("dogapp-clipstreak", "0");
+   localStorage.setItem("dogapp-brushstreak", "0");
+   localStorage.setItem("dogapp-tasksinit", "0");
+}
+
+function setDay(day, to) {
+   if(day < new Date().getDate()) {
+      localStorage.setItem("dogapp-tasks" + day, to);
+   }
+   else {
+      localStorage.setItem("dogapp-tasks" + day, to.replaceAll("_done", "").replaceAll("_missed", ""));
+   }
 }
 
 export function checkOffToday(task) {
    let tmp = makeObjFromStringTasks(getTasksForToday());
    tmp[task] = "done";
    setTasksForToday(makeStringFromObjTasks(tmp));
+
+   const curStr = Number(localStorage.getItem("dogapp-" + task + "streak"));
+   localStorage.setItem("dogapp-" + task + "streak", String(curStr + 1));
+
+   window.dispatchEvent(new Event("checklist"));
+}
+
+export function alreadyCheckedToday(task) {
+   let tmp = makeObjFromStringTasks(getTasksForToday());
+   return tmp[task] == "done";
+}
+
+export function allDoneToday() {
+   let tmp = makeObjFromStringTasks(getTasksForToday());
+   if(tmp.wash && tmp.wash != "done") {
+      return false;
+   }
+   if(tmp.clip && tmp.clip != "done") {
+      return false;
+   }
+   if(tmp.brush && tmp.brush != "done") {
+      return false;
+   }
+
+   return true;
 }
 
 export function getTasksForDay(day) {
-   return localStorage.getItem("dogapp-tasks" + day);
+   const tasks = localStorage.getItem("dogapp-tasks" + day);
+   return tasks == null? "":tasks;
 }
 
 export function getTasksForToday() {
-   return getTasksForDay(new Date().getDate());
+   return getTasksForDay(new Date().getDate() + (new Date().getMonth() === 3? 29:0));
 }
 
 export function setTasksForDay(day, change) {
@@ -51,7 +86,7 @@ export function setTasksForDay(day, change) {
 }
 
 export function setTasksForToday(change) {
-   setTasksForDay(new Date().getDate(), change);
+   setTasksForDay(new Date().getDate() + (new Date().getMonth() === 3? 29:0), change);
 }
 
 

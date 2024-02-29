@@ -1,7 +1,15 @@
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import HappyBeep from "../../audio/message.mp3";
-import {checkOffToday, getTasksForDay, getTasksForToday, setTasksForDay, setTasksForToday} from "../../TaskList";
+import {
+   allDoneToday,
+   alreadyCheckedToday,
+   checkOffToday,
+   getTasksForDay,
+   getTasksForToday,
+   setTasksForDay,
+   setTasksForToday
+} from "../../TaskList";
 
 //import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
@@ -68,8 +76,9 @@ function taskColor(t, task, done) {
    return done? "done":"";
 }
 
-function DailyToDo({todayActive=false, day, functions=null, editable=false}) {
-   const [taskList, setTaskList] = useState(getTasksForDay(day));
+function DailyToDo({todayActive=false, day, checkable=false, editable=false}) {
+   let forDay = getTasksForDay(day + 1);
+   const [taskList, setTaskList] = useState(forDay);
 
    const [brushDone, setBrushDone] = useState(false);
    const [washDone, setWashDone] = useState(false);
@@ -80,8 +89,30 @@ function DailyToDo({todayActive=false, day, functions=null, editable=false}) {
    const t = taskList.toLowerCase();
 
    let fns = {wash: (e) => 0, brush: (e) => 0, clip: (e) => 0};
-   if(functions) {
-      fns = functions;
+   if(checkable) {
+      fns = {
+         wash: () => {
+            if(!alreadyCheckedToday("wash")) {
+               checkOffToday("wash");
+               makeConfetti();
+               setTaskList(getTasksForToday());
+            }
+         },
+         brush: () => {
+            if(!alreadyCheckedToday("brush")) {
+               checkOffToday("brush");
+               makeConfetti();
+               setTaskList(getTasksForToday());
+            }
+         },
+         clip: () => {
+            if(!alreadyCheckedToday("clip")) {
+               checkOffToday("clip");
+               makeConfetti();
+               setTaskList(getTasksForToday());
+            }
+         }
+      };
    }
 
    let clickFn = (e) => 0;
@@ -121,9 +152,68 @@ function DailyToDo({todayActive=false, day, functions=null, editable=false}) {
    );
 }
 
+function DaySet({nextMonth=false}) {
+   const days = [];
+
+   const today = new Date();
+   const lastDay = new Date(today.getFullYear(), today.getMonth()+1 + (nextMonth? 1:0), 0);
+   const firstDay = new Date(today.getFullYear(), today.getMonth() + (nextMonth? 1:0), 1);
+
+   const numDays = lastDay.getDate();
+   console.log(numDays)
+   const numFiller = firstDay.getDay();
+   console.log(numFiller)
+
+   const adjustedDay = today.getDate() + (today.getMonth() === 3? 29:0);
+
+   for(let i = 0; i < numFiller; i++) {
+      days.push(<li style={{visibility: "hidden"}} key={"dummy_" + (i+1)}>0<DailyToDo day={1}/></li>)
+   }
+   for(let i = 0; i < numDays; i++) {
+      const adjIdx = i + (nextMonth? 29:0);
+
+      if((adjIdx+1) < adjustedDay) {
+         days.push(<li key={adjIdx+1}>{i + 1}<DailyToDo day={adjIdx}/></li>)
+      }
+      else if((adjIdx+1) > adjustedDay) {
+         days.push(<li key={adjIdx+1}>{i + 1}<DailyToDo day={adjIdx} editable/></li>)
+      }
+      else {
+         days.push(<li className="active" key={adjIdx+1}>
+            {i + 1}
+            <DailyToDo day={adjIdx} checkable/>
+         </li>)
+      }
+   }
+
+   return days;
+}
+
 function Schedule() {
-   const [nailsClipped, setNailsClipped] = useState(getTasksForToday().includes("clip_done"));
-   const [washed, setWashed] = useState(getTasksForToday().includes("wash_done"));
+   const [viewingNextMonth, setViewingNextMonth] = useState(new Date().getMonth() === 3);
+
+   const [forToday, setForToday] = useState(getTasksForToday());
+
+   const [brushStreak, setBrushStreak] = useState(localStorage.getItem("dogapp-brushstreak"));
+   const [washStreak, setWashStreak] = useState(localStorage.getItem("dogapp-washstreak"));
+   const [clipStreak, setClipStreak] = useState(localStorage.getItem("dogapp-clipstreak"));
+
+   const [allDone, setAllDone] = useState(allDoneToday());
+
+   useEffect(() => {
+      function updateChecklist(ev) {
+         setForToday(getTasksForToday());
+         setAllDone(allDoneToday());
+
+         setBrushStreak(localStorage.getItem("dogapp-brushstreak"));
+         setWashStreak(localStorage.getItem("dogapp-washstreak"));
+         setClipStreak(localStorage.getItem("dogapp-clipstreak"));
+      }
+
+      window.addEventListener('checklist', updateChecklist)
+
+      return () => window.removeEventListener('checklist', updateChecklist);
+   }, [])
 
    return (
       <>
@@ -134,76 +224,40 @@ function Schedule() {
          <br/>
          <br/>
          <p style={{fontSize: "x-large", fontWeight: "bold"}}>I'm on a...</p>
-         <p><b>5-session</b> tooth-brushing streak. Keep those chompers cleaned!</p>
-         {nailsClipped?
-            <p><b>1-session</b> nail-clipping streak. Good job getting back into the swing of things; your dog will thank you for it!</p>
-            :
-            <p><b>0-session</b> nail-clipping streak. Remember, trimmed nails improve your dog's mobility and decrease their chance of injury.</p>
-         }
-         {washed?
-            <p><b>35-session</b> washing streak. We expect no less from a dog-washing <i>legend</i>!!!</p>
-            :
-            <p><b>34-session</b> washing streak. Wow!!! Excellent work keeping your dog healthy and happy!</p>
-         }
+
+         <p><b>{brushStreak}-session</b> tooth-brushing streak. {brushStreak > 0? <>Keep on keeping those chompers cleaned!</>:<>To reduce the risk of disease, you should brush your dog's teeth almost as often as your own.</>}</p>
+
+         <p><b>{clipStreak}-session</b> nail-clipping streak. {clipStreak > 0? <>Good work managing your dog's nails. They appreciate it!</>:<>Remember, trimmed nails improve your dog's mobility and decrease their chance of injury.</>}</p>
+
+         <p><b>{washStreak}-session</b>  washing streak. {washStreak > 0? <>We expect no less from a dog-washing <i>legend</i>!!!</>:<>Regular washing and brushing will improve your dog's quality of life.</>}</p>
+
          <br/>
          <br/>
-         {nailsClipped && washed? "Good work completing today's care tasks! There's nothing left to do.":"Click today's tasks on the calendar to mark them as done."}
+         {allDone? "Good work completing today's care tasks! There's nothing left to do.":"Click today's tasks on the calendar to mark them as done."}
          <p>Click on any day in the future to update its task list.</p>
          <div className="grooming-calendar">
             <div className="month">
                <ul>
-                  <li className="prev">&#10094;</li>
-                  <li className="next">&#10095;</li>
+                  {viewingNextMonth? <li className="prev" onClick={() => setViewingNextMonth(false)}>&#10094;</li>:""}
+                  {viewingNextMonth? "":<li className="next"  onClick={() => setViewingNextMonth(true)}>&#10095;</li>}
                   <li>
-                     February
+                     {viewingNextMonth? "March":"February"}
                   </li>
                </ul>
             </div>
 
             <ul className="weekdays">
+               <li>Sun</li>
                <li>Mon</li>
                <li>Tue</li>
                <li>Wed</li>
                <li>Thu</li>
                <li>Fri</li>
                <li>Sat</li>
-               <li>Sun</li>
             </ul>
 
             <ul className="days">
-               <li style={{visibility: "hidden"}}>0<DailyToDo day={1} /></li>
-               <li style={{visibility: "hidden"}}>0<DailyToDo day={1} /></li>
-               <li>1<DailyToDo day={1} /></li>
-               <li>2<DailyToDo day={2} /></li>
-               <li>3<DailyToDo day={3} /></li>
-               <li>4<DailyToDo day={4} /></li>
-               <li>5<DailyToDo day={5} /></li>
-               <li>6<DailyToDo day={6} /></li>
-               <li>7<DailyToDo day={7} /></li>
-               <li>8<DailyToDo day={8} /></li>
-               <li>9<DailyToDo day={9} /></li>
-               <li>10<DailyToDo day={10} /></li>
-               <li>11<DailyToDo day={11} /></li>
-               <li>12<DailyToDo day={12} /></li>
-               <li>13<DailyToDo day={13} /></li>
-               <li>14<DailyToDo day={14} /></li>
-               <li>15<DailyToDo day={15} /></li>
-               <li>16<DailyToDo day={16} editable/></li>
-               <li>17<DailyToDo day={17} editable/></li>
-               <li>18<DailyToDo day={18} editable/></li>
-               <li>19<DailyToDo day={19} editable/></li>
-               <li>20<DailyToDo day={20} editable/></li>
-               <li>21<DailyToDo day={21} editable/></li>
-               <li className="active">22
-                  <DailyToDo todayActive day={22} functions={{wash: () => {setWashed(true); makeConfetti(); checkOffToday("wash");}, clip: () => {setNailsClipped(true); makeConfetti(); checkOffToday("clip");}}}/>
-               </li>
-               <li>23<DailyToDo day={23} editable/></li>
-               <li>24<DailyToDo day={24} editable/></li>
-               <li>25<DailyToDo day={25} editable/></li>
-               <li>26<DailyToDo day={26} editable/></li>
-               <li>27<DailyToDo day={27} editable/></li>
-               <li>28<DailyToDo day={28} editable/></li>
-               <li>29<DailyToDo day={29} editable/></li>
+               <DaySet nextMonth={viewingNextMonth}/>
             </ul>
          </div>
          <br/>

@@ -3,12 +3,13 @@
 import React, {useState} from 'react';
 import GoldenRetriever from "../../images/dogs/golden-retriever-teeth.png";
 import ShihTzu from "../../images/dogs/shih-tzu-long-hair.png";
+import Dobermann from "../../images/dogs/dobermann-teeth.jpg";
 import {initializeTasks} from "../../TaskList";
 
 const dogOptions = [
-   {id: 1, name: 'Golden Retriever', image: GoldenRetriever},
-   {id: 2, name: 'Shih Tzu', image: ShihTzu},
-   // { id: 3, name: 'Dobermann', image: Dobermann },
+   {id: 1, name: 'Golden Retriever', image: GoldenRetriever, internalName: "golden_retriever"},
+   {id: 2, name: 'Shih Tzu', image: ShihTzu, internalName: "shih_tzu"},
+   { id: 3, name: 'Dobermann', image: Dobermann, internalName: "dobermann"},
 ];
 
 function ChooseDog() {
@@ -20,6 +21,8 @@ function ChooseDog() {
    const handleNavigation = () => {
       if (selectedDog) {
          initializeTasks();
+         localStorage.setItem("dogapp-breed", selectedDog.internalName);
+
          window.location.reload()
       } else {
          alert('Choose a dog breed before proceeding');
