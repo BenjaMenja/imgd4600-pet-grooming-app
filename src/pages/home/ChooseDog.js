@@ -1,7 +1,7 @@
 // This will be a new-user page
 
 import React, {useState} from 'react';
-import GoldenRetriever from "../../images/dogs/golden-retriever.png";
+import GoldenRetriever from "../../images/dogs/golden-retriever-teeth.png";
 import ShihTzu from "../../images/dogs/shih-tzu-long-hair.png";
 import {initializeTasks} from "../../TaskList";
 

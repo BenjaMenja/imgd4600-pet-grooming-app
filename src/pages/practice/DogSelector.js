@@ -1,17 +1,18 @@
 import {useEffect, useRef, useState} from "react";
 import {getTasksForToday} from "../../TaskList";
+import Dogs from "../../DogList"
 
 function DogSelector(props) {
 
     const generateDogNumber = () => {
-        let rand = Math.floor(Math.random() * props.Dogs.length)
+        let rand = Math.floor(Math.random() * Dogs.length)
         const dailytasks = getTasksForToday();
 
         let tries = 0;
         while (tries < 100) {
-            rand = Math.floor(Math.random() * props.Dogs.length)
+            rand = Math.floor(Math.random() * Dogs.length)
 
-            if (dailytasks.includes(props.Dogs[rand].props.requiredTool) && !dailytasks.includes(props.Dogs[rand].props.requiredTool + "_done")) {
+            if (dailytasks.includes(Dogs[rand].props.requiredTool) && !dailytasks.includes(Dogs[rand].props.requiredTool + "_done") && Dogs[rand].props.breed === window.localStorage.getItem("dogapp-breed")) {
                 break
             }
             tries++;
@@ -31,12 +32,13 @@ function DogSelector(props) {
             rand = generateDogNumber()
         }
         setDogToShow(rand)
+        props.resetToolPositions()
     }
 
     useEffect(() => {
         if (ref.current) {
             if (props.brushPosition.x > 0 && props.brushPosition.x < 500 && props.brushPosition.y > 100 && props.brushPosition.y < 600) {
-                if (props.Dogs[DogToShow].props.requiredTool === "wash") {
+                if (Dogs[DogToShow].props.requiredTool === "wash") {
                     setCorrect(1)
                     setIssue("correct")
                     setTime(3)
@@ -44,7 +46,7 @@ function DogSelector(props) {
                 }
                 else {
                     setCorrect(2)
-                    setIssue(props.Dogs[DogToShow].props.requiredTool)
+                    setIssue(Dogs[DogToShow].props.requiredTool)
                 }
             }
         }
@@ -53,7 +55,7 @@ function DogSelector(props) {
     useEffect(() => {
         if (ref.current) {
             if (props.toothbrushPosition.x > -250 && props.toothbrushPosition.x < 250 && props.toothbrushPosition.y > 100 && props.toothbrushPosition.y < 600) {
-                if (props.Dogs[DogToShow].props.requiredTool === "brush") {
+                if (Dogs[DogToShow].props.requiredTool === "brush") {
                     setCorrect(1)
                     setIssue("correct")
                     setTime(3)
@@ -61,7 +63,7 @@ function DogSelector(props) {
                 }
                 else {
                     setCorrect(2)
-                    setIssue(props.Dogs[DogToShow].props.requiredTool)
+                    setIssue(Dogs[DogToShow].props.requiredTool)
                 }
             }
         }
@@ -70,7 +72,7 @@ function DogSelector(props) {
     useEffect(() => {
         if (ref.current) {
             if (props.clipperPosition.x > -500 && props.clipperPosition.x < 0 && props.clipperPosition.y > 100 && props.clipperPosition.y < 600) {
-                if (props.Dogs[DogToShow].props.requiredTool === "clip") {
+                if (Dogs[DogToShow].props.requiredTool === "clip") {
                     setCorrect(1)
                     setIssue("correct")
                     setTime(3)
@@ -78,7 +80,7 @@ function DogSelector(props) {
                 }
                 else {
                     setCorrect(2)
-                    setIssue(props.Dogs[DogToShow].props.requiredTool)
+                    setIssue(Dogs[DogToShow].props.requiredTool)
                 }
             }
         }
@@ -104,7 +106,7 @@ function DogSelector(props) {
     return (
         <div ref={ref} className={"dog-selector"}>
             <ExplanationDisplay issue={issue} time={time}/>
-            {props.Dogs[DogToShow]}
+            {Dogs[DogToShow]}
             <GameStatus correct={correct} />
         </div>
     )
